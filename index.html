@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/logo.jpg" type="image/jpeg" />
+    <link rel="shortcut icon" href="images/logos/rollitos_logo.ico" type="image/x-icon">
+    <title>Rollitos – Helado dulce de la vida</title>
+    <meta name="description" content="Rollitos Heladería & Crepería – Los mejores helados enrollados artesanales y crepes de la ciudad." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#3d2b1f','primary-light':'#5a3e2b',accent:'#c8972e','accent-light':'#daa94a',secondary:'#8b6914',surface:'#ffffff','surface-alt':'#ece5d8','surface-card':'#ffffff',highlight:'#e8a525'},fontFamily:{display:['Playfair Display','serif'],body:['Poppins','sans-serif']}}}}</script>
+    
+    <style>
+        /* =============================================
+           ROLLITOS — Design System v3.5
+           ============================================= */
+        :root{--primary:#3d2b1f;--primary-light:#5a3e2b;--accent:#c8972e;--accent-light:#daa94a;--secondary:#8b6914;--surface:#ffffff;--surface-alt:#ece5d8;--surface-card:#ffffff;--highlight:#e8a525;--text:#3d2b1f;--text-muted:rgba(61,43,31,0.55);--gradient-accent:linear-gradient(135deg,#c8972e,#daa94a);--gradient-warm:linear-gradient(135deg,#c8972e,#a07820);--gradient-dark:linear-gradient(135deg,#3d2b1f,#2a1d14);--shadow-sm:0 2px 8px rgba(61,43,31,0.06);--shadow-md:0 8px 24px rgba(61,43,31,0.1);--shadow-lg:0 16px 48px rgba(61,43,31,0.14);--shadow-glow:0 8px 32px rgba(200,151,46,0.25);--radius-lg:1.25rem;--radius-xl:1.5rem;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Poppins','Inter',sans-serif;background-color:var(--surface);color:var(--text);}
+        .glass{background:rgba(245,240,232,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.4);}
+        .btn-gradient{background:var(--gradient-accent);color:white;border:none;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+        .btn-gradient:hover{transform:translateY(-2px);box-shadow:var(--shadow-glow);}
+        #navbar{transition:background 0.4s,box-shadow 0.4s;}
+        
+        /* Animaciones */
+        @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+        @keyframes slideInRight{from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+        @keyframes fadeOut{to{opacity:0;transform:translateX(50%);}}
+        @keyframes badgeBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+        @keyframes fadeScale {from {opacity: 0; transform: scale(0.95) translateY(10px);} to {opacity: 1; transform: scale(1) translateY(0);}}
+        
+        .roll-anim{animation:float 3s ease-in-out infinite;}
+        .gradient-text{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);}
+        .fade-in.visible{opacity:1;transform:translateY(0);}
+        .toast{animation:slideInRight 0.4s ease,fadeOut 0.4s ease 2.6s forwards;}
+        .badge-bounce{animation:badgeBounce 0.3s ease;}
+        .animate-fade-scale{animation:fadeScale 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;}
+        
+        /* FIX: Menú Móvil Fluido */
+        #mobile-menu { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease; }
+        #mobile-menu.open { max-height: 400px; opacity: 1; padding-bottom: 1rem; }
+        
+        .nav-active{color:#c8972e !important;}
+        #backToTop{transition:opacity 0.3s,transform 0.3s;}
+        #whatsappFab{animation:float 3s ease-in-out infinite;}
+        
+        .sede-card{background:white;border-radius:1rem;box-shadow:var(--shadow-md);overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+        .sede-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+        .map-container{border-radius:0.75rem;overflow:hidden;border:1px solid rgba(61,43,31,0.1);}
+        .form-input:focus{border-color:var(--accent) !important;box-shadow:0 0 0 3px rgba(200,151,46,0.15);}
+        
+        /* Ocultar scrollbar en modales */
+        .hide-scrollbar::-webkit-scrollbar{display:none;}
+        .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+        
+        .category-card{transition:transform 0.2s, box-shadow 0.2s;cursor:pointer;}
+        .category-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.12);}
+        
+        /* Carrusel */
+        .gallery-item{transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s;position:relative;overflow:hidden;}
+        .gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(61,43,31,0.5));opacity:0;transition:opacity 0.4s;}
+        .gallery-item:hover{transform:scale(1.03);box-shadow:var(--shadow-lg);}
+        .gallery-item:hover::after{opacity:1;}
+        .carousel-slide{flex-shrink:0;}
+        #carousel-dots .dot{width:10px;height:10px;border-radius:50%;background:rgba(61,43,31,0.2);cursor:pointer;transition:background 0.3s,transform 0.3s;}
+        #carousel-dots .dot.active{background:var(--accent);transform:scale(1.3);}
+        #carousel-dots .dot:hover{background:var(--accent-light);}
+    </style>
+</head>
+
+<body class="text-primary font-body overflow-x-hidden bg-surface pb-24 lg:pb-0">
+    <div id="toast-container" class="fixed top-24 right-4 sm:right-6 z-[60] flex flex-col gap-3 pointer-events-none"></div>
+
+    <nav id="navbar" class="fixed top-0 w-full z-50 bg-primary shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-2.5">
+                <img src="images/logos/rollitos_logo.png" alt="Rollitos Logo" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border-2 border-accent/30" onerror="this.src='https://via.placeholder.com/32?text=R'" />
+                <span class="font-display text-xl sm:text-2xl font-black text-white tracking-tight">Rollitos</span>
+                <span class="hidden sm:inline-block text-[10px] text-accent font-semibold tracking-wider uppercase">Heladería & Crepería</span>
+            </a>
+            <ul class="hidden md:flex gap-7 text-sm font-medium text-white/80">
+                <li><a href="#menu" class="nav-link hover:text-accent transition-colors duration-300">Menú</a></li>
+                <li><a href="#galeria" class="nav-link hover:text-accent transition-colors duration-300">Galería</a></li>
+                <li><a href="#sedes" class="nav-link hover:text-accent transition-colors duration-300">Sedes</a></li>
+                <li><a href="#proceso" class="nav-link hover:text-accent transition-colors duration-300">Proceso</a></li>
+                <li><a href="#nosotros" class="nav-link hover:text-accent transition-colors duration-300">Nosotros</a></li>
+            </ul>
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#menu" class="btn-gradient text-sm font-semibold px-6 py-2.5 rounded-full shadow-md">Ver Menú</a>
+                <button id="cart-btn-desktop" onclick="window.toggleCart()" class="relative bg-white/15 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300">🛒<span id="cart-count-desktop" class="absolute -top-1 -right-1 bg-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold hidden">0</span></button>
+            </div>
+            <div class="md:hidden flex items-center gap-3">
+                <button id="cart-btn-mobile" onclick="window.toggleCart()" class="relative bg-white/15 text-white w-9 h-9 rounded-full flex items-center justify-center hover:bg-accent transition-colors duration-300 text-sm">🛒<span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold hidden">0</span></button>
+                <button id="burger" class="flex flex-col gap-1.5 cursor-pointer p-2" aria-label="Abrir menú">
+                    <span class="block w-6 h-0.5 bg-white transition-all" id="b1"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all" id="b2"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all" id="b3"></span>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden bg-primary px-6">
+            <ul class="flex flex-col gap-4 text-sm font-medium pt-2 text-white/80">
+                <li><a href="#menu" class="block hover:text-accent nav-link">Menú</a></li>
+                <li><a href="#galeria" class="block hover:text-accent nav-link">Galería</a></li>
+                <li><a href="#sedes" class="block hover:text-accent nav-link">Sedes</a></li>
+                <li><a href="#proceso" class="block hover:text-accent nav-link">Proceso</a></li>
+                <li><a href="#nosotros" class="block hover:text-accent nav-link">Nosotros</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="hero" class="relative min-h-[80vh] flex items-center bg-surface overflow-hidden pt-20">
+        <div class="absolute -top-32 -left-32 w-80 h-80 bg-accent/15 rounded-full blur-[100px]"></div>
+        <div class="absolute top-1/3 -right-24 w-96 h-96 bg-highlight/10 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-20 left-1/3 w-[28rem] h-[28rem] bg-accent/8 rounded-full blur-[100px]"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 w-full z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="w-full md:w-1/2 text-center md:text-left order-2 md:order-1">
+                    <span class="inline-block text-accent font-bold text-sm sm:text-base mb-5 tracking-[0.2em] uppercase bg-accent/10 px-5 py-1.5 rounded-full border border-accent/20">Artesanal & Natural</span>
+                    <h1 class="font-display text-6xl sm:text-7xl lg:text-9xl font-black text-primary leading-[0.9] mb-6">Rollitos</h1>
+                    <p class="text-primary/70 text-lg sm:text-xl mb-8 max-w-lg leading-relaxed">Descubre la magia del <span class="text-accent font-bold">helado tailandés</span> hecho frente a tus ojos. Frescura, sabor y arte en cada rollo.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#menu" class="btn-gradient font-semibold px-10 py-4 rounded-full text-sm shadow-xl">Armar mi Pedido 🍦</a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center order-1 md:order-2">
+                    <div class="relative roll-anim"><img src="images/hero_illustration.png" alt="Helado enrollado artesanal Rollitos" class="w-64 sm:w-80 md:w-96 lg:w-[28rem] drop-shadow-2xl rounded-3xl" onerror="this.src='https://images.unsplash.com/photo-1563805042-7684c8e9e533?auto=format&fit=crop&w=600&q=80'" /></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="py-10 sm:py-12 md:py-14 bg-white relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 sm:mb-14 fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Lo que ofrecemos</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2">Nuestro Menú</h2>
+                <p class="text-primary/45 text-sm mt-3 max-w-md mx-auto">Elige entre nuestras categorías y personaliza tu postre perfecto.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 fade-in pb-2" id="filter-container">
+                <button data-filter="sandwich" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-primary text-white shadow-md">🥪 Sándwiches</button>
+                <button data-filter="crepe" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🥞 Crepes</button>
+                <button data-filter="frutas" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🍓 Frutas c/Crema</button>
+                <button data-filter="fresas" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🍫 Fresas c/Chocolate</button>
+                <button data-filter="waffle" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🧇 Waffles</button>
+                <button data-filter="donitas" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🍩 Box MiniDonas</button>
+                <button data-filter="ensalada" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🥗 Ensaladas</button>
+                <button data-filter="croissant" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🥐 Croissants</button>
+                <button data-filter="canela" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🌀 Rollitos de Canela</button>
+                <button data-filter="taza" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">☕ Taza Galleta</button>
+                <button data-filter="helado" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🍦 Helados</button>
+                <button data-filter="bebida" class="filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-semibold bg-surface-alt text-primary border border-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:shadow-md">🥤 Bebidas</button>
+            </div>
+            <div id="menu-grid"></div>
+        </div>
+    </section>
+
+    <section id="galeria" class="py-10 sm:py-12 md:py-14 bg-surface-alt">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 sm:mb-14 fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Inspírate</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2">Galería</h2>
+            </div>
+            <div class="fade-in relative">
+                <div id="carousel" class="overflow-hidden rounded-2xl relative shadow-lg">
+                    <div id="carousel-track" class="flex transition-transform duration-500 ease-out">
+                        <div class="carousel-slide min-w-full"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80" alt="Postres deliciosos" class="w-full h-64 sm:h-80 md:h-96 object-cover" /></div>
+                        <div class="carousel-slide min-w-full"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Latte artesanal" class="w-full h-64 sm:h-80 md:h-96 object-cover" /></div>
+                        <div class="carousel-slide min-w-full"><img src="https://images.unsplash.com/photo-1563805042-7684c8e9e533?auto=format&fit=crop&w=800&q=80" alt="Helado fresco" class="w-full h-64 sm:h-80 md:h-96 object-cover" /></div>
+                        <div class="carousel-slide min-w-full"><img src="https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80" alt="Crepe dulce" class="w-full h-64 sm:h-80 md:h-96 object-cover" /></div>
+                    </div>
+                    <button id="carousel-prev" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 text-primary flex items-center justify-center shadow-lg hover:bg-white transition-colors z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" /></svg></button>
+                    <button id="carousel-next" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 text-primary flex items-center justify-center shadow-lg hover:bg-white transition-colors z-10"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" /></svg></button>
+                </div>
+                <div id="carousel-dots" class="flex justify-center gap-2 mt-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proceso" class="py-10 sm:py-12 md:py-14 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 sm:mb-14 fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">¿Cómo lo hacemos?</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2">El Arte del Helado Enrollado</h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+                <div class="fade-in text-center p-5 sm:p-6 bg-white rounded-2xl shadow-sm border border-primary/5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-accent/15 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-2xl sm:text-3xl">🥛</div>
+                    <p class="font-semibold text-primary mb-1 text-sm sm:text-base">1. Base fresca</p>
+                    <p class="text-xs sm:text-sm text-primary/50">Elegimos leche fresca y crema de la más alta calidad.</p>
+                </div>
+                <div class="fade-in text-center p-5 sm:p-6 bg-white rounded-2xl shadow-sm border border-primary/5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-highlight/15 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-2xl sm:text-3xl">🍓</div>
+                    <p class="font-semibold text-primary mb-1 text-sm sm:text-base">2. Tu sabor</p>
+                    <p class="text-xs sm:text-sm text-primary/50">Agregas ingredientes y frutas naturales a tu gusto.</p>
+                </div>
+                <div class="fade-in text-center p-5 sm:p-6 bg-white rounded-2xl shadow-sm border border-primary/5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-2xl sm:text-3xl">🧊</div>
+                    <p class="font-semibold text-primary mb-1 text-sm sm:text-base">3. Plancha fría</p>
+                    <p class="text-xs sm:text-sm text-primary/50">La mezcla se extiende y congela en segundos a -30°C.</p>
+                </div>
+                <div class="fade-in text-center p-5 sm:p-6 bg-white rounded-2xl shadow-sm border border-primary/5 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-accent/15 flex items-center justify-center mx-auto mb-3 sm:mb-4 text-2xl sm:text-3xl">🍦</div>
+                    <p class="font-semibold text-primary mb-1 text-sm sm:text-base">4. ¡A disfrutar!</p>
+                    <p class="text-xs sm:text-sm text-primary/50">Los rollos se levantan y se sirven en tu vasito especial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nosotros" class="py-10 sm:py-12 md:py-14 bg-surface-alt relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+            <div class="fade-in">
+                <div class="relative w-full max-w-sm mx-auto">
+                    <img src="https://images.unsplash.com/photo-1563805042-7684c8e9e533?auto=format&fit=crop&w=500&q=80" alt="Helado artesanal Rollitos" class="w-full rounded-2xl shadow-lg" />
+                </div>
+            </div>
+            <div class="fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Quiénes Somos</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2 mb-4">Pasión por el helado artesanal</h2>
+                <p class="text-primary/65 leading-relaxed mb-4">En <strong>Rollitos</strong> elaboramos helados enrollados al momento sobre una plancha fría, usando ingredientes frescos y naturales. Cada creación es única, personalizada y llena de sabor.</p>
+                <p class="text-primary/65 leading-relaxed mb-6">También contamos con una deliciosa variedad de <strong>crepes</strong> dulces y saladas para completar tu experiencia.</p>
+                <div class="flex gap-6 sm:gap-8">
+                    <div class="text-center"><p class="font-display text-2xl sm:text-3xl font-black gradient-text counter" data-target="50">0</p><p class="text-xs text-primary/50 mt-1">Sabores</p></div>
+                    <div class="text-center"><p class="font-display text-2xl sm:text-3xl font-black text-accent">100%</p><p class="text-xs text-primary/50 mt-1">Artesanal</p></div>
+                    <div class="text-center"><p class="font-display text-2xl sm:text-3xl font-black gradient-text">⭐4.9</p><p class="text-xs text-primary/50 mt-1">Calificación</p></div>
+                </div>
+            </div>
+            
+            <div class="fade-in col-span-1 md:col-span-2 w-full mt-6">
+                <h3 class="font-display text-2xl font-bold text-primary mb-5 text-center">Nuestra Ubicación Principal</h3>
+                <div class="map-container shadow-lg h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-primary/10">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15603.968856608569!2d-77.1265819!3d-11.8845785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zVmVudGFuaWxsYSwgQ2FsbGFv!5e0!3m2!1ses!2spe!4v1600000000000!5m2!1ses!2spe" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-10 sm:py-12 md:py-14 bg-white relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 items-start">
+            <div class="fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Contáctanos</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2 mb-6">Hablemos</h2>
+                <div class="space-y-5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0 mt-0.5">🕐</div>
+                        <div><p class="font-semibold text-primary">Horarios</p><p class="text-primary/55 text-sm">Lun – Jue: 12:00 – 9:00 PM</p><p class="text-primary/55 text-sm">Vie – Dom: 11:00 – 10:30 PM</p></div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">📱</div>
+                        <div><p class="font-semibold text-primary">Teléfono</p><p class="text-primary/55 text-sm">+51 933 961 508</p><p class="text-primary/55 text-sm">hola@rollitos.com</p></div>
+                    </div>
+                    <div class="flex gap-3 pt-2">
+                        <a href="https://www.instagram.com/rollitos_heladeria_creperia" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-accent transition-colors duration-300" title="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-accent transition-colors duration-300" title="Facebook"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg></a>
+                        <a href="https://wa.me/+51933961508" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-accent transition-colors duration-300" title="WhatsApp"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="fade-in bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-primary/5">
+                <h3 class="font-display text-xl sm:text-2xl font-bold text-primary mb-6">Envíanos un mensaje</h3>
+                <form id="contact-form" class="space-y-4">
+                    <div><label class="block text-sm font-medium text-primary mb-1" for="f-name">Nombre</label><input type="text" id="f-name" placeholder="Tu nombre" class="form-input w-full border border-primary/12 bg-surface rounded-xl px-4 py-3 text-sm focus:outline-none transition-all" required /></div>
+                    <div><label class="block text-sm font-medium text-primary mb-1" for="f-email">Correo</label><input type="email" id="f-email" placeholder="tu@correo.com" class="form-input w-full border border-primary/12 bg-surface rounded-xl px-4 py-3 text-sm focus:outline-none transition-all" required /></div>
+                    <div><label class="block text-sm font-medium text-primary mb-1" for="f-msg">Mensaje</label><textarea id="f-msg" rows="4" placeholder="¿En qué te podemos ayudar?" class="form-input w-full border border-primary/12 bg-surface rounded-xl px-4 py-3 text-sm focus:outline-none transition-all resize-none" required></textarea></div>
+                    <button type="submit" id="submit-btn" class="w-full btn-gradient font-semibold py-3.5 rounded-xl text-sm">Enviar Mensaje 🍦</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="sedes" class="py-10 sm:py-12 md:py-14 bg-surface-alt">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-10 sm:mb-14 fade-in">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Encuéntranos</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-primary mt-2">Nuestras Sedes</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 fade-in">
+                <div class="sede-card p-5 sm:p-6">
+                    <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" /></svg><h3 class="font-display text-xl font-bold text-primary">Ventanilla</h3></div>
+                    <p class="text-primary/60 text-sm mb-4">Km. 37 Panamericana Norte (Frente a Plaza Villa los Reyes)</p>
+                    <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5!2d-77.12!3d-11.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTHCsDUxJzAwLjAiUyA3N8KwMDcnMTIuMCJX!5e0!3m2!1ses!2spe!4v1" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg"></iframe></div>
+                </div>
+                <div class="sede-card p-5 sm:p-6">
+                    <div class="flex items-center gap-2 mb-2"><svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" /></svg><h3 class="font-display text-xl font-bold text-primary">Luis Felipe</h3></div>
+                    <p class="text-primary/60 text-sm mb-4">Mz W Lt 4 - Luis Felipe de las Casas (Cerca al Local Comunal)</p>
+                    <div class="map-container"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5!2d-76.97!3d-12.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDEwJzQ4LjAiUyA3NsKwNTgnMTIuMCJX!5e0!3m2!1ses!2spe!4v1" width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-lg"></iframe></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-10 sm:py-14">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8">
+                <div>
+                    <p class="font-display text-2xl sm:text-3xl font-black mb-2 flex items-center gap-2"><img src="images/logos/rollitos_logo.png" onerror="this.src='https://via.placeholder.com/32?text=R'" alt="Logo" class="w-8 h-8 rounded-full object-cover border border-accent/30 inline-block" /> Rollitos</p>
+                    <p class="text-white/50 text-sm">Helado dulce de la vida<br>Heladería & Crepería</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-sm mb-3 text-accent uppercase tracking-wider">Navegación</p>
+                    <ul class="space-y-2 text-sm text-white/50">
+                        <li><a href="#menu" class="hover:text-accent transition-colors duration-300">Menú</a></li>
+                        <li><a href="#galeria" class="hover:text-accent transition-colors duration-300">Galería</a></li>
+                        <li><a href="#sedes" class="hover:text-accent transition-colors duration-300">Sedes</a></li>
+                        <li><a href="#proceso" class="hover:text-accent transition-colors duration-300">Proceso</a></li>
+                        <li><a href="#nosotros" class="hover:text-accent transition-colors duration-300">Nosotros</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-semibold text-sm mb-3 text-accent uppercase tracking-wider">Contacto</p>
+                    <ul class="space-y-2 text-sm text-white/50">
+                        <li>📍 Km. 37 Panamericana Norte</li>
+                        <li>📍 Mz W Lt 4 - Luis Felipe</li>
+                        <li>📱 +51 933 961 508</li>
+                        <li>✉️ hola@rollitos.com</li>
+                    </ul>
+                    <div class="flex gap-3 mt-4">
+                        <a href="https://www.instagram.com/rollitos_heladeria_creperia" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg></a>
+                        <a href="https://wa.me/+51933961508" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-accent transition-colors duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-6 text-center"><p class="text-white/25 text-xs">© 2026 Rollitos. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+
+    <a id="whatsappFab" href="https://wa.me/+51933961508?text=Hola%20Rollitos%2C%20quiero%20hacer%20un%20pedido%20🍦" target="_blank" rel="noopener" class="fixed bottom-20 left-4 sm:left-6 z-40 w-12 h-12 sm:w-14 sm:h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-xl sm:text-2xl shadow-lg hover:bg-green-600 hover:scale-110 transition-all">💬</a>
+
+    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-20 right-4 sm:right-6 z-40 w-10 h-10 sm:w-12 sm:h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:bg-accent transition-colors duration-300 opacity-0 pointer-events-none translate-y-4">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+    </button>
+
+    <div id="lightbox" class="fixed inset-0 bg-black/80 z-[80] hidden items-center justify-center">
+        <button onclick="window.navigateLightbox(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl transition-colors px-2 py-4">‹</button>
+        <div class="text-center p-8" onclick="event.stopPropagation()">
+            <div id="lb-content" class="text-7xl sm:text-8xl mb-4 transition-transform"></div>
+            <p id="lb-title" class="text-white font-display text-xl sm:text-2xl"></p>
+            <p class="text-white/50 text-xs sm:text-sm mt-2">← → para navegar · clic afuera para cerrar</p>
+        </div>
+        <button onclick="window.navigateLightbox(1)" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-4xl transition-colors px-2 py-4">›</button>
+        <button onclick="window.closeLightbox()" class="absolute top-4 right-6 text-white/70 hover:text-white text-3xl transition-colors">✕</button>
+    </div>
+
+    <div id="cart-modal" class="fixed inset-0 z-[65] hidden items-center justify-center p-4">
+        <div class="modal-overlay absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="window.toggleCart()"></div>
+        <div class="modal-content relative bg-surface rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden animate-fade-scale">
+            <div class="flex items-center justify-between p-5 border-b border-primary/8 bg-gradient-to-r from-surface to-surface-alt">
+                <h3 class="font-display text-xl font-bold text-primary">🛒 Tu Pedido</h3>
+                <button onclick="window.toggleCart()" class="text-primary/40 hover:text-primary text-2xl transition-colors">✕</button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto p-4 sm:p-5 hide-scrollbar bg-surface-alt/30">
+                <p id="cart-empty" class="text-center text-primary/35 py-12 text-lg font-medium">Tu carrito está vacío 🍦</p>
+            </div>
+            <div id="cart-footer" class="border-t border-primary/8 p-5 hidden bg-white">
+                <div class="flex justify-between mb-2 text-sm"><span class="text-primary/55">Subtotal</span><span id="cart-subtotal" class="font-semibold text-primary">S/ 0.00</span></div>
+                <div class="flex justify-between mb-4 text-xl"><span class="font-bold text-primary">Total</span><span id="cart-total" class="font-display font-black text-accent">S/ 0.00</span></div>
+                <button onclick="window.sendOrderWhatsApp()" class="w-full bg-green-600 text-white font-bold py-3.5 rounded-xl hover:bg-green-700 transition-colors shadow-lg mb-3">Pedir por WhatsApp 💬</button>
+                <button onclick="window.clearCart()" class="w-full bg-red-50 text-red-600 font-semibold py-2.5 rounded-xl hover:bg-red-100 transition-colors text-sm">Vaciar carrito 🗑️</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-5 left-0 right-0 z-[55] flex justify-center pointer-events-none translate-y-0 transition-transform duration-300" id="floating-cart-wrapper">
+        <div id="floating-cart-bar" onclick="window.toggleCart()" class="pointer-events-auto bg-primary text-white pl-4 pr-6 py-3 rounded-full flex items-center gap-4 cursor-pointer shadow-[0_8px_32px_rgba(0,0,0,0.4)] translate-y-24 transition-transform duration-300 hover:scale-[1.03]">
+            <div class="relative bg-white/20 w-12 h-12 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" /></svg>
+                <span id="floating-cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+            </div>
+            <div class="flex flex-col"><span id="floating-cart-total" class="font-bold text-lg leading-tight">S/ 0.00</span><span class="text-white/80 text-[10px] font-bold tracking-widest uppercase">Ver Pedido</span></div>
+        </div>
+    </div>
+
+    <div id="customize-modal" class="fixed inset-0 hidden items-center justify-center p-4 z-[70]">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="window.closeCustomize()"></div>
+        <div class="relative bg-surface rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden border border-primary/10 animate-fade-scale">
+            <div class="p-5 border-b border-primary/8 shrink-0 bg-gradient-to-r from-accent/10 to-primary/5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 id="customize-title" class="font-display text-xl sm:text-2xl font-black text-primary"></h3>
+                        <p id="customize-price" class="text-primary/60 font-medium text-sm mt-1"></p>
+                    </div>
+                    <button onclick="window.closeCustomize()" class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all text-xl">✕</button>
+                </div>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 hide-scrollbar">
+                <div id="size-picker-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">📏 Elige tu Tamaño / Opción</h4><div id="size-picker-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div></div>
+                <div id="base-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍫 Elige tu Base</h4><div id="base-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="sabores-hf-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍦 Elige tus Sabores <span id="sabor-hf-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="sabores-hf-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="sabores-art-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍦 Elige tus Sabores <span id="sabor-art-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="sabores-art-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="frutas-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍓 Elige tu Fruta <span id="fruta-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="frutas-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="toppings-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍬 Elige tus Toppings <span id="topping-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="toppings-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="jaleas-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍯 Elige tu Jalea <span id="jalea-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="jaleas-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="crema-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">🍦 Sabor de Crema <span id="crema-count" class="text-primary/40 font-normal text-sm"></span></h4><div id="crema-grid" class="grid grid-cols-2 gap-3"></div></div>
+                <div id="adicionales-section" class="hidden"><h4 class="font-display text-base font-bold text-primary mb-3">➕ Extras Adicionales</h4><div id="adicionales-grid" class="space-y-3"></div></div>
+            </div>
+            
+            <div class="p-5 border-t border-primary/8 shrink-0 bg-white">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-primary/60 font-semibold">Total a agregar:</span>
+                    <span id="customize-total" class="font-display text-2xl font-black text-accent"></span>
+                </div>
+                <button onclick="window.confirmCustomize()" class="w-full bg-accent text-white hover:bg-accent-light font-bold py-4 rounded-xl text-base shadow-lg active:scale-95 transition-all">Confirmar y Agregar 🛒</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="category-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="window.closeCategoryModal()"></div>
+        <div class="relative bg-surface rounded-2xl shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden border border-primary/10 animate-fade-scale">
+            <div class="p-5 sm:p-6 border-b border-primary/8 flex items-center justify-between shrink-0 bg-gradient-to-r from-primary/5 to-accent/5">
+                <div>
+                    <h3 id="cat-modal-title" class="font-display text-2xl font-black text-primary"></h3>
+                    <p id="cat-modal-count" class="text-primary/50 font-medium text-sm mt-1"></p>
+                </div>
+                <button onclick="window.closeCategoryModal()" class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all text-xl">✕</button>
+            </div>
+            <div id="cat-modal-products" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 hide-scrollbar bg-surface-alt/30"></div>
+        </div>
+    </div>
+
+    <script>
+        // Envolvemos todo en try/catch y limpiamos el carrito si está corrupto
+        try {
+            // Imágenes Globales Reales (Unsplash) para el Menú
+            const imgSandwich = 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80';
+            const imgCrepe = 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=400&q=80';
+            const imgWaffle = 'https://images.unsplash.com/photo-1562376552-0d160a2f5f19?auto=format&fit=crop&w=400&q=80';
+            const imgIceCream = 'https://images.unsplash.com/photo-1563805042-7684c8e9e533?auto=format&fit=crop&w=400&q=80';
+            const imgDrink = 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&q=80';
+            const imgCoffee = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80';
+            const imgSalad = 'https://images.unsplash.com/photo-1512621820109-09ef4c867d47?auto=format&fit=crop&w=400&q=80';
+            const imgDonut = 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=400&q=80';
+
+            // Datos de la Carta
+            const tops = ['Chispas de Chocolate', 'Granola', 'Grajeas', 'Chin chin', 'Gusanitos', 'Maní', 'Coco Rayado', 'Marshmallows', 'Gomitas', 'Oreo', 'Pecanas', 'Mini Pícaras', 'Wafer', 'Olé Olé', 'Mini Glacitas', 'Barquillo', 'Burbuja de Colores', 'Chocotravesuras', 'Chocoyogurt', 'Cua Cua'];
+            const jalsHF = ['Fudge', 'Leche condensada', 'Jarabe de fresa', 'Dulce de leche', 'Algarrobina', 'Jarabe de Maracuyá'];
+            const jalsFrutas = ['Fudge', 'Dulce de leche', 'Leche condensada', 'Jarabe de Fresa', 'Jarabe de Maracuya'];
+            const fruBase = ['Fresa', 'Mango', 'Plátano', 'Aguaymanto', 'Arándano', 'Piña'];
+            const sReg = ['Arándano', 'Algarrobina', 'Aguaymanto', 'Fresa', 'Coco', 'Lúcuma', 'Maracuyá', 'Mango', 'Piña', 'Plátano', 'Casino Menta', 'Oreo'];
+            const sExt = ['Bonobom', 'Chocman', 'Beso de Moza', 'Brownie', 'Princesa', 'Sublime', 'Cereza', 'Nutella'];
+            const sArt = ['Vainilla', 'Chocolate', 'Fresa', 'Lúcuma', 'Oreo', 'Maracuyá', 'Mango', 'Coco'];
+            const cremaSabores = ['Clásica', 'Maracumango', 'Choco Oreo'];
+
+            const items = [
+                // SÁNDWICHES
+                { id: 101, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Pollo Tropical', desc: 'Pollo deshilachado, durazno, pecanas, lechuga, tomate, papas al hilo', price: 9.00, img: imgSandwich },
+                { id: 102, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Royal', desc: 'Pollo deshilachado, jamón, queso, huevo frito, lechuga, tomate, papas al hilo', price: 10.00, img: imgSandwich },
+                { id: 103, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'El Rústico', desc: 'Pollo deshilachado, queso Cheddar, huevo frito y tocino ahumado', price: 12.00, img: imgSandwich },
+                { id: 104, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Mixto', desc: 'Pan Blanco, Jamón y queso derretido con toque de orégano', price: 9.00, img: imgSandwich },
+                { id: 105, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Mixto Completo', desc: 'Pan blanco, huevo frito, jamón y queso derretido', price: 10.00, img: imgSandwich },
+                { id: 106, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Sandwich de Pollo', desc: 'Pollo deshilachado, lechuga, tomate, papas al hilo', price: 8.00, badge: 'popular', img: imgSandwich },
+                { id: 107, cat: 'sandwich', sub: 'Brunch Sándwich', emoji: '🥪', name: 'Club Sandwich', desc: 'Pollo, jamón, queso, tocino, huevo frito, tomate, lechuga, papas fritas', price: 30.00, badge: 'premium', img: imgSandwich },
+                { id: 108, cat: 'sandwich', sub: 'Combos Sándwich', emoji: '🥪', name: 'Combo Mixto', desc: 'Mixto + Jugo clásico', price: 15.00, img: imgSandwich },
+                { id: 109, cat: 'sandwich', sub: 'Combos Sándwich', emoji: '🥪', name: 'Combo Mixto Completo', desc: 'Mixto Completo + Jugo clásico', price: 17.00, img: imgSandwich },
+
+                // CREPES SALADOS
+                { id: 201, cat: 'crepe', sub: 'Crepes Salados', emoji: '🧀', name: 'Crepe Italianisimo', desc: 'Queso derretido con jamón, salsa de tomate y orégano', price: 14.00, img: imgCrepe },
+                { id: 202, cat: 'crepe', sub: 'Crepes Salados', emoji: '🍳', name: 'Crepe Royal', desc: 'Huevo frito, queso derretido con jamón y orégano', price: 16.00, badge: 'popular', img: imgCrepe },
+                { id: 203, cat: 'crepe', sub: 'Crepes Salados', emoji: '🍍', name: 'Crepe Hawaiano', desc: 'Piña dulce con jamón, queso, salsa de tomate y orégano', price: 17.00, img: imgCrepe },
+
+                // FRUTAS CON CREMA
+                { id: 301, cat: 'frutas', sub: 'Frutas con Crema', emoji: '🍓', name: 'Vaso Personalizado', desc: 'Elige tu tamaño, frutas, crema, toppings y jalea', price: 6.00, badge: 'popular', img: imgIceCream },
+                { id: 302, cat: 'frutas', sub: 'Frutas con Crema', emoji: '🍦', name: 'Mega Cono', desc: 'Fruta con crema + 1 topping + 1 jalea (No Delivery)', price: 9.00, img: imgIceCream },
+
+                // FRESAS CON CHOCOLATE
+                { id: 401, cat: 'fresas', sub: 'Fresas con Chocolate', emoji: '🍫', name: 'Fresas con Chocolate', desc: 'Elige tu tamaño y toppings. Deliciosas fresas bañadas', price: 14.00, badge: 'popular', img: imgDonut },
+
+                // CREPES DULCES
+                { id: 501, cat: 'crepe', sub: 'Crepes Clásicos', emoji: '🥞', name: 'Crepe Clásico', desc: 'Elige de 1 a 3 Frutas. Base de Fudge o Manjar', price: 15.00, img: imgCrepe },
+                { id: 502, cat: 'crepe', sub: 'Crepes Clásicos', emoji: '🌰', name: 'Crepe Nutella', desc: 'Elige de 1 a 3 Frutas. Con auténtica Nutella', price: 18.00, badge: 'popular', img: imgCrepe },
+                { id: 503, cat: 'crepe', sub: 'Especialidades Crepes', emoji: '🍫', name: 'Brownie Crep', desc: 'Crepe de Nutella, 1 fruta, Brownie', price: 22.00, badge: 'popular', img: imgCrepe },
+                { id: 504, cat: 'crepe', sub: 'Especialidades Crepes', emoji: '🍦', name: 'Crep Tradicional', desc: '1 fruta, 2 topping, Helado Artesanal, Fudge/DDL + Chantilly', price: 21.00, img: imgCrepe },
+                { id: 505, cat: 'crepe', sub: 'Especialidades Crepes', emoji: '🔥', name: 'Rolli Crep', desc: '1 fruta, 2 topping, Helado Frito, Fudge/DDL, Chantilly', price: 26.00, badge: 'premium', img: imgCrepe },
+                { id: 506, cat: 'crepe', sub: 'Especialidades Crepes', emoji: '🍌', name: 'Rolli Banana', desc: '1 Helado Frito, 2 Plátanos, 2 Toppings, Fudge/DDL, Chantilly', price: 15.00, img: imgCrepe },
+
+                // WAFFLES DULCES
+                { id: 601, cat: 'waffle', sub: 'Waffles Dulces', emoji: '🧇', name: 'Waffle Clásico', desc: 'Base de Fudge o Manjar. Elige cantidad de frutas', price: 16.00, img: imgWaffle },
+                { id: 602, cat: 'waffle', sub: 'Waffles Dulces', emoji: '🧇', name: 'Waffle Nutella', desc: 'Base de Nutella. Elige cantidad de frutas y toppings', price: 19.00, badge: 'popular', img: imgWaffle },
+                { id: 603, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🎉', name: 'Waffle Fiesta', desc: 'Bañado en fudge, Marshmallow, Gomitas, Chin chin, Brownie', price: 21.00, img: imgWaffle },
+                { id: 604, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🍫', name: 'Waffle Sublime', desc: '1 Fruta, Brownie, Paleta Sublime, Fudge o DDL', price: 24.00, badge: 'premium', img: imgWaffle },
+                { id: 605, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🧇', name: 'Waffle Tradicional', desc: '2 Frutas, 2 Toppings, Helado Artesanal, Fudge/DDL, Chantilly', price: 24.00, img: imgWaffle },
+                { id: 606, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🔥', name: 'Rolli Waffle', desc: '2 Frutas, 2 Toppings, Helado Frito, Fudge/DDL, Chantilly', price: 27.00, badge: 'premium', img: imgWaffle },
+                { id: 607, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🫕', name: 'Foundue Mix', desc: 'Salsa Chocolate, Fresas, Plátano, Marshmallows, Waffle', price: 22.00, img: imgWaffle },
+                { id: 608, cat: 'waffle', sub: 'Especialidades Waffles', emoji: '🍌', name: 'Waffle Banana Split', desc: '2 Frutas, 1 Topping, 3 helados art., Plátano, Fudge/DDL, Chantilly', price: 31.00, img: imgWaffle },
+
+                // BOX MINI DONITAS
+                { id: 701, cat: 'donitas', sub: 'Box Mini Donitas', emoji: '🍩', name: 'Box Mini Donitas', desc: 'Elige cantidad, frutas, toppings y base', price: 8.00, badge: 'popular', img: imgDonut },
+
+                // ENSALADAS
+                { id: 801, cat: 'ensalada', sub: 'Ensaladas', emoji: '🥗', name: 'Ensalada Clásica', desc: 'Frutas de estación, yogurt vainilla, miel, algarrobina, granola', price: 12.00, img: imgSalad },
+                { id: 802, cat: 'ensalada', sub: 'Ensaladas', emoji: '🥣', name: 'Copa Frutada', desc: 'Yogurt griego, 2 frutas, granola y miel', price: 15.00, badge: 'popular', img: imgSalad },
+                { id: 803, cat: 'ensalada', sub: 'Ensaladas', emoji: '🥗', name: 'Ensalada con Helado', desc: 'Frutas, yogurt, miel, algarrobina, granola y 1 Helado Artesanal', price: 16.00, img: imgSalad },
+
+                // CROISSANTS
+                { id: 901, cat: 'croissant', sub: 'Croissants', emoji: '🥐', name: 'Dulce Croissant', desc: 'Croissant relleno de Nutella y fresas', price: 15.00, img: imgDonut },
+                { id: 902, cat: 'croissant', sub: 'Croissants', emoji: '🥐', name: 'Dulce Pecado', desc: 'Croissant relleno de Nutella con helado artesanal', price: 16.00, badge: 'popular', img: imgDonut },
+                { id: 903, cat: 'croissant', sub: 'Croissants', emoji: '🥐', name: 'Dulce Tentación', desc: 'Croissant relleno de Nutella y paleta de helado en trozos', price: 17.00, img: imgDonut },
+
+                // ROLLITOS DE CANELA
+                { id: 1001, cat: 'canela', sub: 'Rollitos de Canela', emoji: '🌀', name: 'Rollito Clásico', desc: 'Con Maní y Pecanas', price: 10.00, img: imgDonut },
+                { id: 1002, cat: 'canela', sub: 'Rollitos de Canela', emoji: '🌀', name: 'Rollito de Oreo', desc: 'Sabor a galleta Oreo', price: 10.00, img: imgDonut },
+                { id: 1003, cat: 'canela', sub: 'Rollitos de Canela', emoji: '🌀', name: 'Rollito de Nutella', desc: 'Relleno y bañado en Nutella', price: 10.00, badge: 'popular', img: imgDonut },
+
+                // TAZA GALLETA
+                { id: 1101, cat: 'taza', sub: 'Taza Galleta', emoji: '☕', name: 'Taza Galleta Afogato', desc: 'Deliciosa taza comestible con afogato', price: 15.00, badge: 'premium', img: imgCoffee },
+                { id: 1102, cat: 'taza', sub: 'Taza Galleta', emoji: '☕', name: 'Taza Galleta Capuchino', desc: 'Deliciosa taza comestible con capuchino', price: 14.00, img: imgCoffee },
+
+                // HELADOS FRITOS
+                { id: 1201, cat: 'helado', sub: 'Helados Fritos', emoji: '🍨', name: 'Rollitos Regulares', desc: 'Elige cantidad de sabores regulares, toppings y jalea', price: 9.00, badge: 'popular', img: imgIceCream },
+                { id: 1202, cat: 'helado', sub: 'Helados Fritos', emoji: '🔥', name: 'Rollitos Extremos', desc: 'Elige cantidad de sabores premium, toppings y jalea', price: 12.00, badge: 'premium', img: imgIceCream },
+
+                // HELADOS ARTESANALES
+                { id: 1301, cat: 'helado', sub: 'Helado Artesanal', emoji: '🍦', name: 'Cono Artesanal', desc: 'Elige la cantidad de sabores', price: 5.00, img: imgIceCream },
+                { id: 1302, cat: 'helado', sub: 'Helado Artesanal', emoji: '🍧', name: 'Copa Artesanal', desc: 'Elige la cantidad de sabores', price: 6.00, img: imgIceCream },
+                { id: 1303, cat: 'helado', sub: 'Helado Artesanal', emoji: '🍦', name: 'Mega Cono Artesanal', desc: '3 Sabores a tu elección', price: 15.00, badge: 'popular', img: imgIceCream },
+                { id: 1304, cat: 'helado', sub: 'Especialidades Artesanales', emoji: '🤡', name: 'Copa Payaso', desc: '2 sabores, barquillo, fudge, chantilly y topping', price: 16.00, img: imgIceCream },
+                { id: 1305, cat: 'helado', sub: 'Especialidades Artesanales', emoji: '🍫', name: 'Choco Brownie', desc: 'Brownie de chocolate, 1 bola helado, bañado en fudge', price: 14.00, img: imgDonut },
+                { id: 1306, cat: 'helado', sub: 'Especialidades Artesanales', emoji: '🍨', name: 'Copa Brownie', desc: '2 sabores, trozos de brownie, fudge, barquillo', price: 17.00, badge: 'popular', img: imgIceCream },
+                { id: 1307, cat: 'helado', sub: 'Especialidades Artesanales', emoji: '🍌', name: 'Banana Split', desc: '3 sabores, 3 toppings, plátano, fudge/DDL, chantilly, cereza', price: 18.00, img: imgIceCream },
+                { id: 1308, cat: 'helado', sub: 'Especialidades Artesanales', emoji: '🍰', name: 'Brownie Split', desc: '3 sabores, trozos brownie, 3 toppings, fudge/DDL, chantilly, cereza', price: 19.00, badge: 'premium', img: imgIceCream },
+
+                // BEBIDAS FRÍAS
+                { id: 1401, cat: 'bebida', sub: 'Bebidas Frías', emoji: '💧', name: 'Agua Mineral Cielo', desc: 'Botella 500ml', price: 3.00, img: imgDrink },
+                { id: 1402, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🥤', name: 'Gaseosas', desc: 'Inka Kola / Coca Cola 500ml', price: 4.00, img: imgDrink },
+                { id: 1403, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🍹', name: 'Jugos Clásicos', desc: 'Fresa, Piña, Papaya o Mango', price: 8.00, img: imgDrink },
+                { id: 1404, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🍹', name: 'Jugos Especiales', desc: 'Con combinaciones y leche', price: 10.00, badge: 'popular', img: imgDrink },
+                { id: 1405, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🧊', name: 'Frozen (1/2 Litro)', desc: 'Refrescante bebida frozen', price: 8.00, img: imgDrink },
+                { id: 1406, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🧊', name: 'Frozen (1 Litro)', desc: 'Refrescante bebida frozen familiar', price: 15.00, img: imgDrink },
+                { id: 1407, cat: 'bebida', sub: 'Bebidas Frías', emoji: '☕', name: 'Iced Latte', desc: 'Spanish, Mocha, Oreo o Strawberry Latte', price: 14.00, img: imgCoffee },
+                { id: 1408, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🥤', name: 'Frappes Clásicos', desc: 'Fresa, Manjar, Moccha, Algarrobina', price: 15.00, img: imgDrink },
+                { id: 1409, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🚀', name: 'Frappes Extremos', desc: 'Nutella, Chocolate, Choco Lúcuma, Pícaras, Oreo', price: 17.00, badge: 'premium', img: imgDrink },
+                { id: 1410, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🥤', name: 'Milkshake', desc: 'Batido de helado artesanal, chantilly, topping, jalea', price: 15.00, badge: 'popular', img: imgDrink },
+                { id: 1411, cat: 'bebida', sub: 'Bebidas Frías', emoji: '🍋', name: 'Limonadas', desc: 'Clásica, Fresa o Coco', price: 8.00, img: imgDrink },
+
+                // BEBIDAS CALIENTES
+                { id: 1501, cat: 'bebida', sub: 'Bebidas Calientes', emoji: '🍵', name: 'Infusiones', desc: 'Té, Anís, Manzanilla', price: 3.00, img: imgCoffee },
+                { id: 1502, cat: 'bebida', sub: 'Bebidas Calientes', emoji: '☕', name: 'Cafés Clásicos', desc: 'Americano, Latte, Capuccino', price: 5.00, img: imgCoffee },
+                { id: 1503, cat: 'bebida', sub: 'Bebidas Calientes', emoji: '☕', name: 'Cafés Especiales', desc: 'Affogato, Capuccino con Chantilly', price: 10.00, img: imgCoffee },
+                { id: 1504, cat: 'bebida', sub: 'Bebidas Calientes', emoji: '🍫', name: 'Chocolates Calientes', desc: 'Clásico, con Marshmallows, Oreo o Nutella', price: 10.00, img: imgCoffee }
+            ];
+
+            const formatPrice = v => `S/ ${v.toFixed(2)}`;
+
+            // --- SISTEMA ANTI-CORRUPCIÓN DEL CARRITO ---
+            let cart = [];
+            try { 
+                const saved = localStorage.getItem('rollitos_cart');
+                if (saved) {
+                    cart = JSON.parse(saved);
+                    if(!Array.isArray(cart)) cart = [];
+                }
+            } catch(e) { 
+                cart = []; 
+                localStorage.setItem('rollitos_cart', '[]');
+            }
+            
+            const saveCart = () => {
+                try { localStorage.setItem('rollitos_cart', JSON.stringify(cart)); } catch(e){}
+            };
+
+            // === LÓGICA DE PERSONALIZACIÓN ===
+            function getCustomConfig(id) {
+                const b = { saboresHF: null, saboresArt: null, maxSabores: 0, toppings: null, maxToppings: 0, jaleas: null, maxJaleas: 0, adicionales: null, frutas: null, maxFrutas: 0, saboresCrema: null, maxSaboresCrema: 0, baseSelection: null, sizeTiers: null };
+                
+                const extraAdicionales = [ {name:'Topping Extra',price:1.5}, {name:'Brownie',price:3.5}, {name:'Base de Nutella',price:3}, {name:'Jalea Extra',price:1} ];
+                const adicHF = [ {name:'Brownie',price:4}, {name:'Topping Extra',price:1.5}, {name:'Fruta Extra',price:2}, {name:'Nutella',price:4}, {name:'Bola de helado',price:5}, {name:'Chantilly',price:2} ];
+
+                switch(id) {
+                    case 107: return { ...b, adicionales: [{name:'Extra Papas Fritas', price: 5}] };
+                    case 108:
+                    case 109: return { ...b, adicionales: [{name:'Jugo Clásico con Leche', price: 2}] };
+                    case 301: return { ...b, sizeTiers: [{label:'8 Onz (1 Fru, 1 Top, 1 Jal)', price:6, maxFrutas:1, maxToppings:1, maxJaleas:1}, {label:'10 Onz (1 Fru, 1 Top, 1 Jal)', price:8, maxFrutas:1, maxToppings:1, maxJaleas:1}, {label:'10 Onz (1 Fru, 2 Top, 2 Jal)', price:10, maxFrutas:1, maxToppings:2, maxJaleas:2}, {label:'12 Onz (1 Fru, 2 Top, 2 Jal)', price:12, maxFrutas:1, maxToppings:2, maxJaleas:2}, {label:'14 Onz (1 Fru, 2 Top, 2 Jal)', price:14, maxFrutas:1, maxToppings:2, maxJaleas:2}, {label:'16 Onz (1 Fru, 3 Top, 3 Jal)', price:16, maxFrutas:1, maxToppings:3, maxJaleas:3}, {label:'20 Onz (1 Fru, 3 Top, 3 Jal)', price:19, maxFrutas:1, maxToppings:3, maxJaleas:3}, {label:'El Extremo 1L (2 Fru, 4 Top, 3 Jal)', price:26, maxFrutas:2, maxToppings:4, maxJaleas:3}], frutas: fruBase, toppings: tops, jaleas: jalsFrutas, saboresCrema: cremaSabores, maxSaboresCrema:1, adicionales: extraAdicionales };
+                    case 302: return { ...b, frutas: fruBase, maxFrutas: 1, toppings: tops, maxToppings: 1, jaleas: jalsFrutas, maxJaleas: 1, saboresCrema: cremaSabores, maxSaboresCrema:1 };
+                    case 401: return { ...b, sizeTiers: [{label:'12 Onz (+2 Toppings)', price:14, maxToppings:2}, {label:'14 Onz (+3 Toppings)', price:16, maxToppings:3}, {label:'16 Onz (+3 Toppings)', price:18, maxToppings:3}], toppings: tops };
+                    case 501: return { ...b, sizeTiers: [{label:'1 Fruta', price:15, maxFrutas:1}, {label:'2 Frutas', price:16, maxFrutas:2}, {label:'3 Frutas', price:17, maxFrutas:3}], baseSelection: ['Fudge', 'Manjar Blanco'], frutas: fruBase };
+                    case 502: return { ...b, sizeTiers: [{label:'1 Fruta', price:18, maxFrutas:1}, {label:'2 Frutas', price:19, maxFrutas:2}, {label:'3 Frutas', price:20, maxFrutas:3}], frutas: fruBase };
+                    case 503: return { ...b, frutas: fruBase, maxFrutas:1 };
+                    case 504: return { ...b, frutas: fruBase, maxFrutas:1, toppings: tops, maxToppings:2, saboresArt: sArt, maxSabores:1, baseSelection: ['Fudge', 'Dulce de Leche'] };
+                    case 505: return { ...b, frutas: fruBase, maxFrutas:1, toppings: tops, maxToppings:2, saboresHF: sReg.concat(sExt), maxSabores:1, baseSelection: ['Fudge', 'Dulce de Leche'] };
+                    case 506: return { ...b, toppings: tops, maxToppings:2, saboresHF: sReg.concat(sExt), maxSabores:1, baseSelection: ['Fudge', 'Dulce de Leche'] };
+                    case 601: return { ...b, sizeTiers: [{label:'1 Fruta', price:16, maxFrutas:1}, {label:'2 Frutas', price:17, maxFrutas:2}, {label:'3 Frutas', price:18, maxFrutas:3}], baseSelection: ['Fudge', 'Dulce de Leche'], frutas: fruBase };
+                    case 602: return { ...b, sizeTiers: [{label:'1 Fruta', price:19, maxFrutas:1}, {label:'2 Frutas', price:20, maxFrutas:2}, {label:'3 Frutas', price:21, maxFrutas:3}], frutas: fruBase, toppings: tops, maxToppings: 2 };
+                    case 604: return { ...b, frutas: fruBase, maxFrutas:1, toppings: tops, maxToppings: 2, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 605: return { ...b, frutas: fruBase, maxFrutas:2, toppings: tops, maxToppings:2, saboresArt: sArt, maxSabores:1, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 606: return { ...b, frutas: fruBase, maxFrutas:2, toppings: tops, maxToppings:2, saboresHF: sReg.concat(sExt), maxSabores:1, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 607: return { ...b, frutas: fruBase, maxFrutas: 1, baseSelection: ['Fudge', 'Dulce de Leche'], adicionales: [{name:'Chocolate Extra', price: 5}] }; 
+                    case 608: return { ...b, frutas: fruBase, maxFrutas:2, toppings: tops, maxToppings:1, saboresArt: sArt, maxSabores:3, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 701: return { ...b, sizeTiers: [{label:'6 Unidades (1 Fru, 1 Top)', price:8, maxFrutas:1, maxToppings:1}, {label:'12 Unidades (1 Fru, 2 Top)', price:15, maxFrutas:1, maxToppings:2}, {label:'18 Unidades (2 Fru, 2 Top)', price:23, maxFrutas:2, maxToppings:2}], frutas: fruBase, toppings: tops, baseSelection: ['Fudge', 'Dulce de Leche'] };
+                    case 802: return { ...b, frutas: fruBase, maxFrutas:2 }; 
+                    case 803: return { ...b, saboresArt: sArt, maxSabores: 1 };
+                    case 902: return { ...b, saboresArt: sArt, maxSabores: 1 };
+                    case 1201: return { ...b, sizeTiers: [{label:'1 Sabor', price:9, maxSabores:1}, {label:'2 Sabores', price:10, maxSabores:2}, {label:'3 Sabores', price:11, maxSabores:3}], saboresHF: sReg, toppings: tops, maxToppings: 2, jaleas: jalsHF, maxJaleas: 1, adicionales: adicHF };
+                    case 1202: return { ...b, sizeTiers: [{label:'1 Sabor', price:12, maxSabores:1}, {label:'2 Sabores', price:13, maxSabores:2}, {label:'3 Sabores', price:14, maxSabores:3}], saboresHF: sExt, toppings: tops, maxToppings: 2, jaleas: jalsHF, maxJaleas: 1, adicionales: adicHF };
+                    case 1301: return { ...b, sizeTiers: [{label:'1 Sabor', price:5, maxSabores:1}, {label:'2 Sabores', price:9, maxSabores:2}], saboresArt: sArt }; 
+                    case 1302: return { ...b, sizeTiers: [{label:'1 Sabor', price:6, maxSabores:1}, {label:'2 Sabores', price:11, maxSabores:2}, {label:'3 Sabores', price:15, maxSabores:3}], saboresArt: sArt }; 
+                    case 1303: return { ...b, saboresArt: sArt, maxSabores: 3 }; 
+                    case 1304: return { ...b, saboresArt: sArt, maxSabores: 2, toppings: tops, maxToppings: 1 }; 
+                    case 1305: return { ...b, saboresArt: sArt, maxSabores: 1 }; 
+                    case 1306: return { ...b, saboresArt: sArt, maxSabores: 2 }; 
+                    case 1307: return { ...b, saboresArt: sArt, maxSabores: 3, toppings: tops, maxToppings: 3, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 1308: return { ...b, saboresArt: sArt, maxSabores: 3, toppings: tops, maxToppings: 3, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 1403: return { ...b, baseSelection: ['Fresa', 'Piña', 'Papaya', 'Mango'] }; 
+                    case 1404: return { ...b, sizeTiers: [{label:'Piña c/ Papaya', price:10}, {label:'Fresa c/ Leche', price:10}, {label:'Plátano c/ Leche', price:10}, {label:'Especial', price:10}, {label:'Mango c/ Leche', price:10}, {label:'Frutos Rojos', price:11}] };
+                    case 1405: return { ...b, sizeTiers: [{label:'Fresa', price:8}, {label:'Piña', price:8}, {label:'Limón', price:8}, {label:'Maracuyá', price:8}, {label:'Mango', price:8}, {label:'Maracumango', price:9}] };
+                    case 1406: return { ...b, sizeTiers: [{label:'Fresa', price:15}, {label:'Piña', price:15}, {label:'Limón', price:15}, {label:'Maracuyá', price:15}, {label:'Mango', price:15}, {label:'Maracumango', price:17}] };
+                    case 1407: return { ...b, baseSelection: ['Spanish Latte', 'Mocha Latte', 'Oreo Latte', 'Strawberry Latte'], adicionales: [{name:'Vaso Cracking de Chocolate', price: 3}] };
+                    case 1408: return { ...b, baseSelection: ['Fresa', 'Manjar', 'Moccha', 'Algarrobina'] }; 
+                    case 1409: return { ...b, baseSelection: ['Nutella', 'Chocolate', 'Choco Lúcuma', 'Pícaras', 'Oreo'] }; 
+                    case 1410: return { ...b, saboresArt: sArt, maxSabores: 1, toppings: tops, maxToppings: 1, baseSelection: ['Fudge', 'Dulce de Leche'] }; 
+                    case 1411: return { ...b, sizeTiers: [{label:'Clásica', price:8}, {label:'Fresa', price:8}, {label:'Coco', price:10}] };
+                    case 1502: return { ...b, sizeTiers: [{label:'Americano', price:5}, {label:'Latte', price:9}, {label:'Capuccino', price:10}] };
+                    case 1503: return { ...b, sizeTiers: [{label:'Affogato', price:10}, {label:'Capuccino c/ Chantilly', price:12}] };
+                    case 1504: return { ...b, sizeTiers: [{label:'Clásico', price:10}, {label:'Clásico c/ Marshmallows', price:12}, {label:'Oreo', price:12}, {label:'Nutella', price:12}] };
+                    default: return null;
+                }
+            }
+
+            // === EVENTOS DEL NAVBAR / RESPONSIVE MENU ===
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.addEventListener('scroll', () => {
+                document.getElementById('navbar').classList.toggle('shadow-md', window.scrollY > 50);
+                const b = document.getElementById('backToTop'); 
+                if(b) {
+                    b.style.opacity = window.scrollY > 600 ? '1' : '0'; 
+                    b.style.pointerEvents = window.scrollY > 600 ? 'auto' : 'none'; 
+                    b.style.transform = window.scrollY > 600 ? 'translateY(0)' : 'translateY(1rem)';
+                }
+                let c = ''; 
+                document.querySelectorAll('section[id]').forEach(s => { if(window.scrollY >= s.offsetTop - 200) c = s.id; });
+                navLinks.forEach(l => l.classList.toggle('nav-active', l.getAttribute('href') === `#${c}`));
+            });
+
+            // Menú hamburguesa (Animación arreglada)
+            const burger = document.getElementById('burger'), mob = document.getElementById('mobile-menu'), b1 = document.getElementById('b1'), b2 = document.getElementById('b2'), b3 = document.getElementById('b3'); let mo = false;
+            if(burger) {
+                burger.addEventListener('click', () => { 
+                    mo = !mo; 
+                    mob.classList.toggle('open', mo); 
+                    b1.style.transform = mo ? 'rotate(45deg) translate(4px,4px)' : ''; 
+                    b2.style.opacity = mo ? '0' : '1'; 
+                    b3.style.transform = mo ? 'rotate(-45deg) translate(4px,-4px)' : ''; 
+                });
+            }
+            if(mob) {
+                mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { 
+                    mo = false; mob.classList.remove('open'); 
+                    b1.style.transform = ''; b2.style.opacity = '1'; b3.style.transform = ''; 
+                }));
+            }
+
+            const obs = new IntersectionObserver(e => e.forEach(x => { 
+                if(x.isIntersecting) { 
+                    x.target.classList.add('visible'); 
+                    x.target.querySelectorAll('.counter').forEach(c => { 
+                        const t = +c.dataset.target; if(c.dataset.done) return; c.dataset.done = '1'; 
+                        let curr = 0; const step = Math.ceil(t / 40), int = setInterval(() => { curr += step; if(curr >= t) { curr = t; clearInterval(int); } c.textContent = `+${curr}`; }, 30); 
+                    }); 
+                } 
+            }), { threshold: 0.15 });
+            document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+            // Manejo del formulario de Contacto -> Usando mailto real
+            const contactForm = document.getElementById('contact-form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', e => {
+                    e.preventDefault(); 
+                    const n = document.getElementById('f-name').value.trim(), em = document.getElementById('f-email').value.trim(), m = document.getElementById('f-msg').value.trim();
+                    if(!n || !em || !m) return showToast('Por favor completa todos los campos', 'error');
+                    
+                    const btn = document.getElementById('submit-btn'); 
+                    btn.textContent = 'Abriendo tu correo...'; btn.disabled = true;
+                    
+                    const subject = encodeURIComponent(`Nuevo contacto web de ${n}`);
+                    const body = encodeURIComponent(`Hola Rollitos,\n\nSoy ${n} (${em}).\n\nMensaje:\n${m}`);
+                    window.location.href = `mailto:hola@rollitos.com?subject=${subject}&body=${body}`;
+
+                    setTimeout(() => { showToast(`Redirigiendo a tu correo... 🎉`, 'success'); e.target.reset(); btn.textContent = 'Enviar Mensaje 🍦'; btn.disabled = false; }, 1200);
+                });
+            }
+
+            const tr = document.getElementById('carousel-track'), sl = document.querySelectorAll('.carousel-slide'), dt = document.getElementById('carousel-dots');
+            if(tr && sl.length) {
+                let cc = 0, auto, sx = 0;
+                sl.forEach((_, i) => { const d = document.createElement('button'); d.className = `dot ${i===0?'active':''}`; d.onclick = () => go(i); dt.appendChild(d); });
+                function go(i) { cc = ((i % sl.length) + sl.length) % sl.length; tr.style.transform = `translateX(-${cc * 100}%)`; document.querySelectorAll('#carousel-dots .dot').forEach((d, j) => d.classList.toggle('active', j === cc)); }
+                const r = () => { clearInterval(auto); auto = setInterval(() => go(cc + 1), 5000); };
+                const prev = document.getElementById('carousel-prev'), next = document.getElementById('carousel-next');
+                if(prev) prev.onclick = () => { go(cc - 1); r(); }; 
+                if(next) next.onclick = () => { go(cc + 1); r(); };
+                tr.addEventListener('touchstart', e => sx = e.changedTouches[0].screenX, {passive:true});
+                tr.addEventListener('touchend', e => { const d = sx - e.changedTouches[0].screenX; if(Math.abs(d) > 50) { go(cc + (d > 0 ? 1 : -1)); r(); } });
+                r();
+            }
+            
+            // === RENDERIZADO DEL CARRITO OPTIMIZADO PARA MÓVILES ===
+            function removeFromCart(id, k) { cart = k ? cart.filter(c => c.customKey !== k) : cart.filter(c => c.id !== id || c.customKey); saveCart(); updateCartUI(); }
+            function changeQty(id, d, k) { const i = k ? cart.find(c => c.customKey === k) : cart.find(c => c.id === id && !c.customKey); if(!i) return; i.qty += d; if(i.qty <= 0) removeFromCart(id, k); else { saveCart(); updateCartUI(); } }
+            function clearCart() { cart = []; saveCart(); updateCartUI(); showToast('Carrito vaciado 🗑️', 'info'); }
+            const getTotal = () => cart.reduce((s, c) => s + c.price * c.qty, 0);
+            const getTotalItems = () => cart.reduce((s, c) => s + c.qty, 0);
+
+            function updateCartUI() {
+                try {
+                    const count = getTotalItems();
+                    ['desktop', 'mobile'].forEach(s => { const b = document.getElementById(`cart-count-${s}`); if(b) { b.textContent = count; b.classList.toggle('hidden', count === 0); if(count>0){ b.classList.add('badge-bounce'); setTimeout(()=>b.classList.remove('badge-bounce'),300); } } });
+                    const fb = document.getElementById('floating-cart-bar');
+                    if(fb) { fb.classList.toggle('translate-y-24', count === 0); fb.classList.toggle('translate-y-0', count > 0); if(count>0){ document.getElementById('floating-cart-count').textContent = count; document.getElementById('floating-cart-total').textContent = formatPrice(getTotal()); } }
+                    const c = document.getElementById('cart-items'), f = document.getElementById('cart-footer');
+                    if(!c) return;
+                    if(!cart || !cart.length) { c.innerHTML = '<p id="cart-empty" class="text-center text-primary/35 py-12 text-lg font-medium">Tu carrito está vacío 🍦</p>'; if(f) f.classList.add('hidden'); return; }
+                    if(f) f.classList.remove('hidden');
+                    
+                    // Diseño super seguro y vertical para móviles que evita el texto aplastado
+                    c.innerHTML = cart.map(i => {
+                        const ck = i.customKey ? `\`${i.customKey}\`` : 'null';
+                        const d = [
+                            i.tierName && `<span class="block text-[11px] sm:text-xs">📏 ${i.tierName}</span>`,
+                            i.base && `<span class="block text-[11px] sm:text-xs">🍫 Base: ${i.base}</span>`,
+                            (i.saboresHF && i.saboresHF.length) && `<span class="block text-[11px] sm:text-xs">🍦 Sabores: ${i.saboresHF.join(', ')}</span>`,
+                            (i.saboresArt && i.saboresArt.length) && `<span class="block text-[11px] sm:text-xs">🍦 Sabores: ${i.saboresArt.join(', ')}</span>`,
+                            (i.toppings && i.toppings.length) && `<span class="block whitespace-normal break-words text-[11px] sm:text-xs">🍬 Toppings: ${i.toppings.join(', ')}</span>`,
+                            (i.jaleas && i.jaleas.length) && `<span class="block text-[11px] sm:text-xs">🍯 Jalea: ${i.jaleas.join(', ')}</span>`,
+                            (i.frutas && i.frutas.length) && `<span class="block text-[11px] sm:text-xs">🍓 Fruta: ${i.frutas.join(', ')}</span>`,
+                            (i.saboresCrema && i.saboresCrema.length) && `<span class="block text-[11px] sm:text-xs">🍦 Crema: ${i.saboresCrema.join(', ')}</span>`,
+                            (i.adicionales && i.adicionales.length) && `<span class="block whitespace-normal break-words text-[11px] sm:text-xs">➕ Extras: ${i.adicionales.join(', ')}</span>`
+                        ].filter(Boolean);
+                        
+                        return `
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-3.5 sm:p-4 bg-white border border-primary/10 rounded-xl mb-3 shadow-sm relative">
+                            <div class="flex items-start gap-3 flex-1 min-w-0 pr-6 sm:pr-0">
+                                <span class="text-2xl sm:text-3xl shrink-0 mt-0.5">${i.emoji||'🍦'}</span>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-bold text-primary text-sm sm:text-base leading-tight">${i.name}</h4>
+                                    ${d.length ? `<div class="text-primary/60 mt-1 space-y-0.5">${d.join('')}</div>` : ''}
+                                    <p class="text-accent font-black text-sm mt-1.5">${formatPrice(i.price)}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-end border-t border-primary/5 sm:border-t-0 pt-3 sm:pt-0 mt-1 sm:mt-0">
+                                <div class="flex items-center gap-1 bg-surface-alt rounded-lg p-1 mr-3 sm:mr-0">
+                                    <button onclick="window._changeQty(${i.id},-1,${ck})" class="w-8 h-8 flex items-center justify-center text-primary font-bold hover:text-accent transition-colors text-lg">−</button>
+                                    <span class="font-bold text-primary text-sm w-6 text-center">${i.qty}</span>
+                                    <button onclick="window._changeQty(${i.id},1,${ck})" class="w-8 h-8 flex items-center justify-center text-primary font-bold hover:text-accent transition-colors text-lg">+</button>
+                                </div>
+                                <button onclick="window._removeFromCart(${i.id},${ck})" class="absolute top-3 right-3 sm:static sm:ml-4 text-red-400 hover:text-red-600 transition-colors p-1" title="Eliminar">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                </button>
+                            </div>
+                        </div>`;
+                    }).join('');
+                    const subt = document.getElementById('cart-subtotal'), tott = document.getElementById('cart-total');
+                    if(subt) subt.textContent = formatPrice(getTotal());
+                    if(tott) tott.textContent = formatPrice(getTotal());
+                } catch(e) { console.error('Error renderizando carrito', e); }
+            }
+
+            function toggleCart() { const m = document.getElementById('cart-modal'); if(m){ m.classList.toggle('hidden'); m.classList.toggle('flex'); document.body.style.overflow = m.classList.contains('hidden') ? '' : 'hidden'; } }
+            
+            function sendOrderWhatsApp() {
+                if(!cart || !cart.length) return;
+                let m = '¡Hola Rollitos! 🍦 Quiero hacer este pedido:\n\n';
+                cart.forEach(c => { m += `• ${c.emoji||''} *${c.name}* x${c.qty} — ${formatPrice(c.price * c.qty)}\n` + [c.tierName&&`   📏 ${c.tierName}`, c.base&&`   🍫 Base: ${c.base}`, (c.saboresHF && c.saboresHF.length)&&`   🍦 Sabores: ${c.saboresHF.join(', ')}`, (c.saboresArt && c.saboresArt.length)&&`   🍦 Sabores: ${c.saboresArt.join(', ')}`, (c.toppings && c.toppings.length)&&`   🍬 Toppings: ${c.toppings.join(', ')}`, (c.jaleas && c.jaleas.length)&&`   🍯 Jalea: ${c.jaleas.join(', ')}`, (c.frutas && c.frutas.length)&&`   🍓 Frutas: ${c.frutas.join(', ')}`, (c.saboresCrema && c.saboresCrema.length)&&`   🍦 Crema: ${c.saboresCrema.join(', ')}`, (c.adicionales && c.adicionales.length)&&`   ➕ Extras: ${c.adicionales.join(', ')}`].filter(Boolean).join('\n') + (c.tierName||c.base||(c.toppings&&c.toppings.length)||(c.saboresHF&&c.saboresHF.length)||(c.jaleas&&c.jaleas.length)||(c.frutas&&c.frutas.length)||(c.saboresCrema&&c.saboresCrema.length)||(c.adicionales&&c.adicionales.length) ? '\n\n' : '\n'); });
+                window.open(`https://wa.me/+51933961508?text=${encodeURIComponent(m + `💰 *Total: ${formatPrice(getTotal())}*`)}`, '_blank'); showToast('Redirigiendo a WhatsApp… 💬', 'success');
+            }
+
+            function showToast(m, t = 'info') {
+                const c = document.getElementById('toast-container'); if(!c) return;
+                const colors = { success: 'bg-green-600', info: 'bg-primary', error: 'bg-red-500' }, el = document.createElement('div');
+                el.className = `toast ${colors[t] || colors.info} text-white px-6 py-4 rounded-xl shadow-xl text-sm font-semibold pointer-events-auto flex items-center gap-2 border border-white/20`; el.textContent = m;
+                c.appendChild(el); setTimeout(() => el.remove(), 3000);
+            }
+
+            let currentFilter = 'sandwich';
+            function renderMenu(f) {
+                try {
+                    const g = [], s = new Set(), fil = f === 'all' ? items : items.filter(i => i.cat === f);
+                    fil.forEach(i => { if(!s.has(i.sub)) { s.add(i.sub); g.push({ sub: i.sub, items: [] }); } g.find(x => x.sub === i.sub).items.push(i); });
+                    window._menuGroups = g;
+                    
+                    const grid = document.getElementById('menu-grid');
+                    if(!grid) return;
+                    
+                    grid.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">${g.map((x, i) => {
+                        const p = x.items.map(y => y.price), minP = Math.min(...p), maxP = Math.max(...p);
+                        return `<div class="category-card flex flex-col rounded-2xl shadow-sm overflow-hidden bg-white cursor-pointer hover:shadow-xl transition-all border border-primary/5" style="animation-delay:${i * 0.08}s" onclick="window.openCategoryModal(${i})">
+                            <div class="h-48 sm:h-56 md:h-64 bg-surface-alt relative overflow-hidden">
+                                <img src="${x.items[0].img || 'https://via.placeholder.com/400'}" alt="${x.sub}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=Rollitos'" />
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-start justify-between mb-1"><h3 class="font-display text-lg sm:text-xl font-bold text-primary">${x.items[0].emoji || '🍽️'} ${x.sub}</h3></div>
+                                <p class="text-primary/50 text-sm mb-4">${x.items.length} ${x.items.length === 1 ? 'producto' : 'productos disponibles'}</p>
+                                <div class="flex items-center justify-between mt-auto">
+                                    <span class="font-bold text-base text-accent">${minP === maxP ? formatPrice(minP) : `Desde ${formatPrice(minP)}`}</span>
+                                    <span class="text-xs font-bold text-white bg-primary px-4 py-2 rounded-full uppercase tracking-wider shadow-sm">Ver Más</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('')}</div>`;
+                } catch(e) { console.error('Error renderMenu', e); }
+            }
+
+            function openCategoryModal(idx) {
+                try {
+                    const g = window._menuGroups[idx], m = document.getElementById('category-modal'); if(!g || !m) return;
+                    document.getElementById('cat-modal-title').textContent = `${g.items[0].emoji||''} ${g.sub}`; 
+                    document.getElementById('cat-modal-count').textContent = `${g.items.length} ${g.items.length === 1 ? 'producto disponible' : 'productos disponibles'}`;
+                    
+                    document.getElementById('cat-modal-products').innerHTML = g.items.map(i => `
+                    <div class="product-row flex gap-4 p-4 rounded-xl border border-primary/10 bg-white shadow-sm hover:shadow-md transition-all">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 shrink-0 relative rounded-xl overflow-hidden bg-surface-alt shadow-inner">
+                            <img src="${i.img}" onerror="this.src='https://via.placeholder.com/200?text=Rollitos'" alt="${i.name}" class="w-full h-full object-cover absolute inset-0" />
+                        </div>
+                        <div class="flex flex-col flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-2 mb-1">
+                                <h4 class="font-bold text-primary text-base sm:text-lg leading-tight">${i.name}</h4>
+                                ${i.badge === 'popular' ? '<span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-1 rounded-md font-bold uppercase tracking-wider shrink-0 shadow-sm">⭐ Pop</span>' : i.badge === 'premium' ? '<span class="text-[10px] bg-purple-100 text-purple-700 px-2 py-1 rounded-md font-bold uppercase tracking-wider shrink-0 shadow-sm">💎 Prem</span>' : ''}
+                            </div>
+                            <p class="text-primary/60 text-xs sm:text-sm leading-snug mb-3 line-clamp-2">${i.desc || ''}</p>
+                            <div class="flex flex-row items-center justify-between mt-auto">
+                                <span class="font-display text-lg sm:text-xl font-black text-accent">${formatPrice(i.price)}</span>
+                                <button onclick="event.stopPropagation(); window._addToCart(${i.id})" class="bg-accent text-white hover:bg-accent-light text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full shadow-md active:scale-95 transition-all whitespace-nowrap">Agregar 🛒</button>
+                            </div>
+                        </div>
+                    </div>`).join('');
+                    m.classList.remove('hidden'); m.classList.add('flex'); document.body.style.overflow = 'hidden';
+                } catch(e) { console.error('Error openCategoryModal', e); }
+            }
+            function closeCategoryModal() { const m = document.getElementById('category-modal'); if(m){ m.classList.add('hidden'); m.classList.remove('flex'); document.body.style.overflow = ''; } }
+
+            let cItm = null, cCfg = null, selT = [], selJ = [], selA = [], selF = [], selC = [], selB = null, selHF = [], selSArt = [], selS = 0, pGrp = null;
+            
+            function openCustomize(id) {
+                try {
+                    cItm = items.find(i => i.id === id); cCfg = getCustomConfig(id);
+                    selT = []; selJ = []; selA = []; selF = []; selC = []; selB = null; selHF = []; selSArt = []; selS = 0;
+                    
+                    const cm = document.getElementById('category-modal');
+                    if(cm && !cm.classList.contains('hidden')) { 
+                        pGrp = window._menuGroups.findIndex(g => document.getElementById('cat-modal-title').textContent.includes(g.sub)); 
+                        cm.classList.add('hidden'); cm.classList.remove('flex'); 
+                    } else pGrp = null;
+                    
+                    document.getElementById('customize-title').textContent = `${cItm.emoji||''} ${cItm.name}`; 
+                    document.getElementById('customize-price').textContent = `Precio base: ${formatPrice(cItm.price)}`;
+                    
+                    const renderS = (id, data, fn, html) => { 
+                        const el = document.getElementById(id); 
+                        if(el) {
+                            if(data && data.length){ 
+                                el.classList.remove('hidden'); 
+                                el.querySelector('div').innerHTML = data.map(html).join(''); 
+                            } else el.classList.add('hidden'); 
+                        }
+                    };
+                    
+                    renderS('size-picker-section', cCfg.sizeTiers, null, (t,i) => `<button data-idx="${i}" onclick="window.selectSizeTier(${i})" class="size-tier-btn text-sm px-3 py-3 rounded-xl border-2 ${i===0?'border-accent bg-accent/10 font-bold text-accent':'border-primary/10 bg-white text-primary'} hover:border-accent transition-all text-center leading-tight shadow-sm"><span class="block font-bold">${t.label}</span><span class="block opacity-80 font-bold mt-1 text-xs">${formatPrice(t.price)}</span></button>`);
+                    if(cCfg.sizeTiers && cCfg.sizeTiers.length > 0) document.getElementById('customize-price').textContent = `Selección: ${cCfg.sizeTiers[0].label} · ${formatPrice(cCfg.sizeTiers[0].price)}`;
+                    
+                    renderS('base-section', cCfg.baseSelection, null, (b,i) => `<button data-idx="${i}" onclick="window.toggleBase(${i})" class="base-btn text-sm px-4 py-3 rounded-xl border-2 border-primary/10 text-primary bg-white hover:border-accent transition-all font-bold text-center shadow-sm">${b}</button>`);
+                    renderS('sabores-hf-section', cCfg.saboresHF, null, (s,i) => `<button data-idx="${i}" onclick="window.toggleSaborHF(${i})" class="sabor-hf-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${s}</button>`);
+                    renderS('sabores-art-section', cCfg.saboresArt, null, (s,i) => `<button data-idx="${i}" onclick="window.toggleSaborArt(${i})" class="sabor-art-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${s}</button>`);
+                    renderS('frutas-section', cCfg.frutas, null, (f,i) => `<button data-idx="${i}" onclick="window.toggleFruta(${i})" class="fruta-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${f}</button>`);
+                    renderS('toppings-section', cCfg.toppings, null, (t,i) => `<button data-idx="${i}" onclick="window.toggleTopping(${i})" class="topping-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${t}</button>`);
+                    renderS('jaleas-section', cCfg.jaleas, null, (j,i) => `<button data-idx="${i}" onclick="window.toggleJalea(${i})" class="jalea-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${j}</button>`);
+                    renderS('adicionales-section', cCfg.adicionales, null, (a,i) => `<button data-idx="${i}" onclick="window.toggleAdicional(${i})" class="adicional-btn flex items-center justify-between w-full text-sm font-semibold px-4 py-3.5 rounded-xl border-2 border-primary/10 bg-white hover:border-accent transition-all shadow-sm"><span class="text-primary">${a.name}</span><span class="bg-accent/10 text-accent px-2 py-1 rounded-md text-xs">+${formatPrice(a.price)}</span></button>`);
+                    renderS('crema-section', cCfg.saboresCrema, null, (c,i) => `<button data-idx="${i}" onclick="window.toggleSaborCrema(${i})" class="crema-btn text-xs font-semibold px-3 py-2.5 rounded-lg border-2 border-primary/10 text-primary bg-white hover:border-accent text-left truncate shadow-sm">${c}</button>`);
+                    
+                    updateCustomizeUI();
+                    const m = document.getElementById('customize-modal'); m.classList.remove('hidden'); m.classList.add('flex'); document.body.style.overflow = 'hidden';
+                } catch(e) { console.error('Error openCustomize', e); }
+            }
+
+            function closeCustomize() { 
+                const cm = document.getElementById('customize-modal');
+                if(cm){ cm.classList.add('hidden'); cm.classList.remove('flex'); }
+                cItm = null; 
+                if(pGrp !== null) openCategoryModal(pGrp); else document.body.style.overflow = ''; 
+                pGrp = null; 
+            }
+            
+            function selectSizeTier(i) { 
+                selS = i; const t = cCfg?.sizeTiers?.[i]; 
+                if(t) { 
+                    selT = selT.slice(0, t.maxToppings || cCfg.maxToppings || 0); 
+                    selJ = selJ.slice(0, t.maxJaleas || cCfg.maxJaleas || 0); 
+                    selF = selF.slice(0, t.maxFrutas || cCfg.maxFrutas || 0); 
+                    selHF = selHF.slice(0, t.maxSabores || cCfg.maxSabores || 0);
+                    selSArt = selSArt.slice(0, t.maxSabores || cCfg.maxSabores || 0);
+                    document.getElementById('customize-price').textContent = `Selección: ${t.label} · ${formatPrice(t.price)}`; 
+                } 
+                updateCustomizeUI(); 
+            }
+            
+            const tg = (arr, max, val) => { const i = arr.indexOf(val); if(i > -1) arr.splice(i, 1); else { if(arr.length >= max) arr.shift(); arr.push(val); } updateCustomizeUI(); };
+            
+            function toggleTopping(i) { tg(selT, cCfg?.sizeTiers?.[selS]?.maxToppings || cCfg?.maxToppings || 2, i); }
+            function toggleJalea(i) { tg(selJ, cCfg?.sizeTiers?.[selS]?.maxJaleas || cCfg?.maxJaleas || 1, i); }
+            function toggleAdicional(i) { const idx = selA.indexOf(i); idx > -1 ? selA.splice(idx,1) : selA.push(i); updateCustomizeUI(); }
+            function toggleFruta(i) { tg(selF, cCfg?.sizeTiers?.[selS]?.maxFrutas || cCfg?.maxFrutas || 1, i); }
+            function toggleSaborCrema(i) { tg(selC, cCfg?.maxSaboresCrema || 1, i); }
+            function toggleBase(i) { selB = selB === i ? null : i; updateCustomizeUI(); }
+            function toggleSaborHF(i) { tg(selHF, cCfg?.sizeTiers?.[selS]?.maxSabores || cCfg?.maxSabores || 3, i); }
+            function toggleSaborArt(i) { tg(selSArt, cCfg?.sizeTiers?.[selS]?.maxSabores || cCfg?.maxSabores || 2, i); }
+
+            function updateCustomizeUI() {
+                try {
+                    const mt = cCfg?.sizeTiers?.[selS]?.maxToppings || cCfg?.maxToppings || 2;
+                    const mj = cCfg?.sizeTiers?.[selS]?.maxJaleas || cCfg?.maxJaleas || 1;
+                    const mf = cCfg?.sizeTiers?.[selS]?.maxFrutas || cCfg?.maxFrutas || 1;
+                    const mh = cCfg?.sizeTiers?.[selS]?.maxSabores || cCfg?.maxSabores || 3;
+                    const bp = cCfg?.sizeTiers?.[selS]?.price || cItm?.price || 0;
+                    
+                    if(cCfg?.toppings && cCfg.toppings.length) document.getElementById('topping-count').textContent = `(${selT.length}/${mt})`;
+                    if(cCfg?.jaleas && cCfg.jaleas.length) document.getElementById('jalea-count').textContent = `(${selJ.length}/${mj})`;
+                    if(cCfg?.frutas && cCfg.frutas.length) document.getElementById('fruta-count').textContent = `(${selF.length}/${mf})`;
+                    if(cCfg?.saboresCrema && cCfg.saboresCrema.length) document.getElementById('crema-count').textContent = `(${selC.length}/${cCfg.maxSaboresCrema})`;
+                    if(cCfg?.saboresHF && cCfg.saboresHF.length) document.getElementById('sabor-hf-count').textContent = `(${selHF.length}/${mh})`;
+                    if(cCfg?.saboresArt && cCfg.saboresArt.length) document.getElementById('sabor-art-count').textContent = `(${selSArt.length}/${mh})`;
+                    
+                    const hl = (sel, arr) => document.querySelectorAll(sel).forEach(b => { 
+                        const idx = +b.dataset.idx;
+                        const on = Array.isArray(arr) ? arr.includes(idx) : arr === idx; 
+                        b.className = b.className.replace(/bg-accent\/10|border-accent|text-accent|font-bold|bg-white|border-primary\/10|text-primary/g, '').trim() + (on?` border-accent font-bold bg-accent/10 text-accent`:` bg-white border-primary/10 text-primary`); 
+                    });
+                    
+                    hl('.size-tier-btn', selS); hl('.base-btn', selB); hl('.sabor-hf-btn', selHF); hl('.sabor-art-btn', selSArt); hl('.topping-btn', selT); hl('.jalea-btn', selJ); hl('.adicional-btn', selA); hl('.fruta-btn', selF); hl('.crema-btn', selC);
+                    
+                    document.getElementById('customize-total').textContent = formatPrice(bp + (cCfg?.adicionales ? selA.reduce((s,i)=>s+cCfg.adicionales[i].price,0) : 0));
+                } catch(e) { console.error('Error updateCustomizeUI', e); }
+            }
+
+            function confirmCustomize() {
+                try {
+                    if(!cItm) return;
+                    if(cCfg?.baseSelection && cCfg.baseSelection.length && selB === null) return showToast('Por favor elige una base / opción obligatoria', 'error');
+                    
+                    const mp = (arr, src) => arr.map(i => src && src[i] ? src[i] : null).filter(Boolean);
+                    
+                    const nT = mp(selT, cCfg?.toppings);
+                    const nJ = mp(selJ, cCfg?.jaleas);
+                    const nA = mp(selA, cCfg?.adicionales).map(a => a.name);
+                    const nF = mp(selF, cCfg?.frutas);
+                    const nC = mp(selC, cCfg?.saboresCrema);
+                    const nHF = mp(selHF, cCfg?.saboresHF);
+                    const nSA = mp(selSArt, cCfg?.saboresArt);
+                    
+                    const bN = (selB !== null && cCfg?.baseSelection) ? cCfg.baseSelection[selB] : null;
+                    const tN = cCfg?.sizeTiers?.[selS]?.label || null;
+                    const bP = cCfg?.sizeTiers?.[selS]?.price || cItm.price;
+                    
+                    const tot = bP + (cCfg?.adicionales ? selA.reduce((s,i) => s + cCfg.adicionales[i].price, 0) : 0);
+                    
+                    const safeJoin = (arr) => (arr && arr.length ? arr.slice().sort().join(',') : '');
+                    const key = `${cItm.id}-${tN||''}-${bN||''}-${safeJoin(nHF)}-${safeJoin(nSA)}-${safeJoin(nT)}-${safeJoin(nJ)}-${safeJoin(nA)}-${safeJoin(nF)}-${safeJoin(nC)}`;
+                    
+                    const ex = cart.find(c => c.customKey === key);
+                    if(ex) ex.qty++; else cart.push({id:cItm.id, customKey:key, name:cItm.name, tierName:tN, emoji:cItm.emoji, price:tot, qty:1, toppings:nT, jaleas:nJ, adicionales:nA, frutas:nF, saboresCrema:nC, base:bN, saboresHF:nHF, saboresArt:nSA});
+                    
+                    saveCart(); updateCartUI(); showToast(`¡Añadido al carrito con éxito! 🎉`, 'success'); closeCustomize();
+                } catch(e) { console.error('Error confirmCustomize', e); }
+            }
+
+            function addToCart(id) {
+                try {
+                    if(getCustomConfig(id)) {
+                        openCustomize(id);
+                        return;
+                    }
+                    const it = items.find(i => i.id === id);
+                    if(!it) return;
+                    
+                    const ex = cart.find(c => c.id === id && !c.customKey);
+                    if(ex) ex.qty++; else cart.push({ id, name: it.name, emoji: it.emoji, price: it.price, qty: 1 });
+                    saveCart(); updateCartUI(); showToast(`${it.emoji} ${it.name} añadido al carrito`, 'success');
+                } catch(e) { console.error('Error addToCart', e); }
+            }
+
+            // Exposición global para que el HTML pueda llamar a estas funciones
+            Object.assign(window, { _addToCart:addToCart, _removeFromCart:removeFromCart, _changeQty:changeQty, toggleCart, clearCart, sendOrderWhatsApp, closeCustomize, selectSizeTier, toggleTopping, toggleJalea, toggleAdicional, toggleFruta, toggleSaborCrema, toggleBase, toggleSaborHF, toggleSaborArt, confirmCustomize, openCategoryModal, closeCategoryModal });
+
+            // Iniciar botones de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('bg-primary', 'text-white', 'shadow-md'); b.classList.add('bg-surface-alt', 'text-primary'); });
+                btn.classList.add('bg-primary', 'text-white', 'shadow-md'); btn.classList.remove('bg-surface-alt', 'text-primary');
+                renderMenu(currentFilter = btn.dataset.filter);
+            }));
+
+            // Primera carga obligatoria
+            renderMenu('sandwich'); 
+            updateCartUI();
+            
+        } catch (fatalError) {
+            console.error("FATAL ERROR: Falló la inicialización del script. ", fatalError);
+        }
+    </script>
+</body>
+</html>
