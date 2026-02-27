@@ -1,0 +1,62 @@
+/* =============================================
+   ROLLITOS — Design System v3.0 (Optimized)
+   ============================================= */
+:root{--primary:#3d2b1f;--primary-light:#5a3e2b;--accent:#c8972e;--accent-light:#daa94a;--secondary:#8b6914;--surface:#ffffff;--surface-alt:#ece5d8;--surface-card:#ffffff;--highlight:#e8a525;--text:#3d2b1f;--text-muted:rgba(61,43,31,0.55);--gradient-accent:linear-gradient(135deg,#c8972e,#daa94a);--gradient-warm:linear-gradient(135deg,#c8972e,#a07820);--gradient-dark:linear-gradient(135deg,#3d2b1f,#2a1d14);--shadow-sm:0 2px 8px rgba(61,43,31,0.06);--shadow-md:0 8px 24px rgba(61,43,31,0.1);--shadow-lg:0 16px 48px rgba(61,43,31,0.14);--shadow-glow:0 8px 32px rgba(200,151,46,0.25);--radius-lg:1.25rem;--radius-xl:1.5rem;}
+html{scroll-behavior:smooth;}
+body{font-family:'Poppins','Inter',sans-serif;background-color:var(--surface);color:var(--text);}
+.glass{background:rgba(245,240,232,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.4);}
+.glass-dark{background:rgba(61,43,31,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.btn-gradient{background:var(--gradient-accent);color:white;border:none;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+.btn-gradient:hover{transform:translateY(-2px);box-shadow:var(--shadow-glow);}
+.btn-gradient::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);opacity:0;transition:opacity 0.3s;}
+.btn-gradient:hover::after{opacity:1;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.2;pointer-events:none;}
+#navbar{transition:background 0.4s,box-shadow 0.4s;}
+.flavor-card{transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),box-shadow 0.35s;position:relative;overflow:hidden;opacity:0;transform:translateY(24px);animation:cardAppear 0.5s ease forwards;border:1px solid rgba(61,43,31,0.08);}
+.flavor-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-accent);opacity:0;transition:opacity 0.35s;}
+.flavor-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.flavor-card:hover::before{opacity:1;}
+.subcategory-header{position:relative;padding-left:1rem;}
+.subcategory-header::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:70%;border-radius:2px;background:var(--gradient-accent);}
+.item-badge{position:absolute;top:12px;right:12px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:3px 10px;border-radius:9999px;backdrop-filter:blur(8px);}
+.item-badge-inline{display:inline-block;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:2px 10px;border-radius:9999px;}
+.badge-popular{background:rgba(200,151,46,0.92);color:white;}
+.badge-new{background:rgba(107,142,35,0.9);color:white;}
+.badge-premium{background:linear-gradient(135deg,#c8972e,#8b6914);color:white;}
+.price-tag{background:rgba(61,43,31,0.06);padding:4px 14px;border-radius:9999px;}
+@keyframes cardAppear{to{opacity:1;transform:translateY(0);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+@keyframes slideInRight{from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes fadeOut{to{opacity:0;transform:translateX(50%);}}
+@keyframes badgeBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+.roll-anim{animation:float 3s ease-in-out infinite;}
+.gradient-text{background:var(--gradient-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+#mobile-menu{transition:max-height 0.4s ease,opacity 0.4s ease;max-height:0;opacity:0;overflow:hidden;}
+#mobile-menu.open{max-height:400px;opacity:1;}
+.toast{animation:slideInRight 0.4s ease,fadeOut 0.4s ease 2.6s forwards;}
+.badge-bounce{animation:badgeBounce 0.3s ease;}
+.modal-overlay{transition:opacity 0.3s ease;}
+.modal-content{transition:transform 0.3s ease,opacity 0.3s ease;}
+.nav-active{color:#c8972e !important;}
+#backToTop{transition:opacity 0.3s,transform 0.3s;}
+#whatsappFab{animation:float 3s ease-in-out infinite;}
+.gallery-item{transition:transform 0.4s cubic-bezier(0.22,1,0.36,1),box-shadow 0.4s;position:relative;overflow:hidden;}
+.gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(61,43,31,0.5));opacity:0;transition:opacity 0.4s;}
+.gallery-item:hover{transform:scale(1.03);box-shadow:var(--shadow-lg);}
+.gallery-item:hover::after{opacity:1;}
+.sede-card{background:white;border-radius:1rem;box-shadow:var(--shadow-md);overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+.sede-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.map-container{border-radius:0.75rem;overflow:hidden;border:1px solid rgba(61,43,31,0.1);}
+.hide-scrollbar::-webkit-scrollbar{display:none;}
+.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+.form-input:focus{border-color:var(--accent) !important;box-shadow:0 0 0 3px rgba(200,151,46,0.15);}
+@media (max-width:480px){.flavor-card{padding:0 !important;}.flavor-card .text-4xl{font-size:1.75rem;}.flavor-card h3{font-size:0.875rem;}.gallery-item{height:10rem !important;}#cart-modal .modal-content{max-width:100% !important;}}
+@media (max-width:640px){section{padding-top:4rem;padding-bottom:4rem;}.gallery-item{height:11rem !important;}.subcategory-header h3{font-size:1.1rem;}}
+@media (max-width:768px){.flavor-card:hover{transform:translateY(-4px);}}
+@media (min-width:1024px){.gallery-item:nth-child(1){grid-row:span 1;}.gallery-item:nth-child(2),.gallery-item:nth-child(4){grid-row:span 2;}}
+.carousel-slide{flex-shrink:0;}
+#carousel-dots .dot{width:10px;height:10px;border-radius:50%;background:rgba(61,43,31,0.2);cursor:pointer;transition:background 0.3s,transform 0.3s;}
+#carousel-dots .dot.active{background:var(--accent);transform:scale(1.3);}
+#carousel-dots .dot:hover{background:var(--accent-light);}
